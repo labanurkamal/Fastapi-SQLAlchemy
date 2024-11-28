@@ -1,13 +1,9 @@
 from fastapi import FastAPI
 
-from pydantic import BaseModel, EmailStr
-
+from users.views import router as users_router
+from items import router as item_router
 
 app = FastAPI()
-
-class CreateUser(BaseModel):
-    email: EmailStr
-
 
 @app.get("/")
 def get_index():
@@ -19,19 +15,5 @@ def get_index():
 def hello(name: str = "World"):
     return {"message": f"Hello, {name.title()}"}
 
-
-@app.post("/users/")
-def create_user(user: CreateUser):
-    return {
-        "message": "success",
-        "email": user.email
-    }
-
-@app.get("/items/")
-def list_items():
-    return ["Items", "Item2"]
-
-
-@app.get("/items/{item_id}")
-def get_item_by_id(item_id: int):
-    return {"item": {"item_id": item_id}}
+app.include_router(users_router, prefix="/users", tags=["USERS"])
+app.include_router(item_router, prefix="/items", tags=["ITEMS"])
