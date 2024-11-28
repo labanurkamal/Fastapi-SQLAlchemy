@@ -3,6 +3,7 @@ from annotated_types import MaxLen, MinLen
 
 from pydantic import BaseModel, EmailStr
 
+
 class CreateUser(BaseModel):
     username: Annotated[str, MaxLen(100), MinLen(3)]
     email: EmailStr

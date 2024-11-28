@@ -4,6 +4,7 @@ from fastapi import APIRouter, Path
 
 router = APIRouter()
 
+
 @router.get("/")
 def list_items():
     return ["Items", "Item2"]
